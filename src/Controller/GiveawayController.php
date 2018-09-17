@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Giveaway;
+use App\Entity\Category;
 use App\Form\GiveawayType;
 use App\Repository\GiveawayRepository;
+use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,6 +54,30 @@ class GiveawayController extends AbstractController
         return $this->render('giveaway/new.html.twig', [
             'formGiveaway' => $form->createView(),
             'editMode' => $giveaway->getId() !== null
+        ]);
+    }
+
+    /**
+     * @Route("/giveaway/{id}", name="show_giveaway", requirements={"id"="\d+"})
+     */
+    public function show(Giveaway $giveaway, Request $request, ObjectManager $manager){
+        $comment = new Comment();
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $comment->setCreatedAt(new \DateTime())
+                    ->setGiveaway($giveaway);
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->redirectToRoute('show_giveaway', ['id' => $giveaway->getId()]);
+        }
+
+        return $this->render('giveaway/show.html.twig', [
+            'giveaway' => $giveaway,
+            'formComment' => $form->createView()
         ]);
     }
 }
