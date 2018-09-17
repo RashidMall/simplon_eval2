@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Giveaway;
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Form\GiveawayType;
+use App\Form\CommentType;
 use App\Repository\GiveawayRepository;
 use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
