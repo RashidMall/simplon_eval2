@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% form_theme formGiveaway 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <h1>Create a new Giveaway</h1>
+    {{ form_start(formGiveaway) }}
+
+    {{ form_row(formGiveaway.title, {'attr': {'placeholder': "Giveaway Title"}}) }}
+    {{ form_row(formGiveaway.category) }}
+    {{ form_row(formGiveaway.content, {'attr': {'placeholder': "Giveaway Content"}}) }}
+    {{ form_row(formGiveaway.image, {'attr': {'placeholder': "Image url"}}) }}
+
+    <button type="submit" class="btn btn-success">
+        {% if editMode %}
+            Edit
+        {% else %}
+            Create
+        {% endif %}
+    </button>
+    {{ form_end(formGiveaway) }}
+{% endblock %}
