@@ -2,8 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class UserAthentificationController extends AbstractController
 {
@@ -26,20 +31,20 @@ class UserAthentificationController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('user_authentification/registration.html.twig', [
+        return $this->render('user_athentification/registration.html.twig', [
             'formReg' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/connexion", name="login")
+     * @Route("/login", name="login")
      */
     public function login(){
-        return $this->render('user_authentification/login.html.twig');
+        return $this->render('user_athentification/login.html.twig');
     }
 
     /**
-     * @Route("/deconnexion", name="logout")
+     * @Route("/logout", name="logout")
      */
     public function logout(){
         

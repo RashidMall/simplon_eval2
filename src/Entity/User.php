@@ -2,14 +2,21 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *  fields = {"email"},
+ *  message = "This email address already exists"
+ * )
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -20,6 +27,7 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
      */
     private $email;
 
@@ -30,6 +38,8 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="8")
+     * @Assert\EqualTo(propertyPath="confirm_password")
      */
     private $password;
 
@@ -37,6 +47,12 @@ class User
      * @ORM\OneToMany(targetEntity="App\Entity\Giveaway", mappedBy="user")
      */
     private $giveaway;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\EqualTo(propertyPath="password")
+     */
+    private $confirm_password;
 
     public function __construct()
     {
@@ -113,5 +129,29 @@ class User
         }
 
         return $this;
+    }
+
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirm_password;
+    }
+
+    public function setConfirmPassword(?string $confirm_password): self
+    {
+        $this->confirm_password = $confirm_password;
+
+        return $this;
+    }
+
+    public function eraseCredentials(){
+
+    }
+
+    public function getSalt(){
+
+    }
+
+    public function getRoles(){
+        return ['ROLE_USER'];
     }
 }
