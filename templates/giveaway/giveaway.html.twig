@@ -1,21 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
 
 {% block body %}
-    <section class="giveaways">
-        {% for giveaway in giveaways %}
-            <article>
-                <h2>{{ article.title }}</h2>
-                <div class="metadata">
-                    Created on {{ article.createdAt|date('d/m/Y') }} at {{ article.createdAt|date('H:i') }} in the {{ article.category.title }} category
-                </div>
-                <div class="content">
-                    <img src="{{ article.image }}" alt="">
-                    {{ article.content|raw }}
-                    <a href="{{ path('blog_show', {'id': article.id}) }}" class="btn btn-primary">Read</a>
-                </div>
-            </article>
-        {% endfor %}
-    </section>
+    <h1>Welcome to Don-Don</h1>
+    <p>Lorem ipsum dolor sit amet, eu ius nisl atqui. 
+    Pri id regione consulatu splendide, vim legere audiam in. 
+    Id duo molestie sadipscing, vix ut sumo nihil, duo ad debitis constituam honestatis. 
+    Autem solet vim ut, est sint unum aeque te, his ut eligendi argumentum comprehensam.
+    </p>
 {% endblock %}

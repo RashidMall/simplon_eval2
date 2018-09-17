@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+    <section class="giveaways">
+        {% for giveaway in giveaways %}
+            <article>
+                <h2>{{ giveaway.title }}</h2>
+                <div class="metadata">
+                    Created on {{ giveaway.createdAt|date('d/m/Y') }} at {{ giveaway.createdAt|date('H:i') }} in the {{ giveaway.category.title }} category
+                </div>
+                <div class="content">
+                    <img src="{{ giveaway.image }}" alt="">
+                    {{ giveaway.content|raw }}
+                    <a href="{{ path('show_giveaway', {'id': giveaway.id}) }}" class="btn btn-primary">Show</a>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+{% endblock %}

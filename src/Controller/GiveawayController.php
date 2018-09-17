@@ -20,12 +20,23 @@ use Doctrine\Common\Persistence\ObjectManager;
 class GiveawayController extends AbstractController
 {
     /**
-     * @Route("/", name="giveaway")
+     * @Route("/", name="home")
      */
-    public function index()
-    {
+    public function home(){
         return $this->render('giveaway/giveaway.html.twig', [
             'controller_name' => 'GiveawayController',
+        ]);
+    }
+
+    /**
+     * @Route("/giveaway", name="giveaways")
+     */
+    public function index(GiveawayRepository $repo){
+        $giveaways = $repo->findAll();
+
+        return $this->render('giveaway/index.html.twig', [
+            'controller_name' => 'GiveawayController',
+            'giveaways' => $giveaways
         ]);
     }
 
